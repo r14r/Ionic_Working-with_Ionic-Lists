@@ -1,0 +1,82 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-menu-button></ion-menu-button>
+		</ion-buttons>
+
+		<ion-title>List of Items</ion-title>
+
+		<ion-buttons slot="end">
+			<ion-button (click)="button_add()">
+				<ion-icon name="add"></ion-icon>
+			</ion-button>
+			<ion-button (click)="button_save()">
+				<ion-icon name="save"></ion-icon>
+			</ion-button>
+			<ion-button (click)="button_refresh()">
+				<ion-icon name="refresh"></ion-icon>
+			</ion-button>
+			<ion-button (click)="button_reorder()">
+				<ion-icon name="reorder"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+<ion-content>
+	<ion-list>
+		<ion-reorder-group #reordergroup (ionItemReorder)="reorderItems($event)" [disabled]='allowReorder'>
+			<ion-item-sliding #sliding_item *ngFor="let item of items, let i=index">
+				<ion-item (click)="navigateTo(item)">
+					<ion-icon [name]="item.icon" slot="start"></ion-icon>
+					<h3>{{item.title}}</h3>
+					<p>{{item.note}}</p>
+					<!--
+					<ion-reorder slot="end"></ion-reorder>
+					-->
+				</ion-item>
+
+				<!--
+				<ion-item-options side="end">
+					<ion-item-option color="danger" (click)="button_delete(sliding_item, i)">
+						<ion-icon slot="icon-only" name="trash"></ion-icon>
+					</ion-item-option>
+				</ion-item-options>
+			-->
+			</ion-item-sliding>
+		</ion-reorder-group>
+	</ion-list>
+
+
+	<ion-list>
+		<ion-item-sliding>
+			<ion-item>
+				<ion-avatar item-start>
+					<img src="img/slimer.png">
+				</ion-avatar>
+				<h2>Slimer</h2>
+			</ion-item>
+			<ion-item-options side="start">
+				<button ion-button color="primary">
+					<ion-icon name="text"></ion-icon>
+					Text
+				</button>
+				<button ion-button color="secondary">
+					<ion-icon name="call"></ion-icon>
+					Call
+				</button>
+			</ion-item-options>
+			<ion-item-options side="end">
+				<button ion-button color="primary">
+					<ion-icon name="mail"></ion-icon>
+					Email
+				</button>
+			</ion-item-options>
+		</ion-item-sliding>
+	</ion-list>
+
+	<div *ngIf="selectedItem" padding>
+		You navigated here from <b>{{selectedItem.title }}</b>
+	</div>
+
+	<router-outlet></router-outlet>
+</ion-content>
